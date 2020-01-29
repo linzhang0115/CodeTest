@@ -1,0 +1,68 @@
+﻿@model ClarkCodingChallenge.DataAccess.Contact
+@{
+	ViewData["Title"] = "Contacts Page";
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<div class="text-center">
+	<h1 class="display-4">Welcome</h1>
+</div>
+<form id="formContact">
+	<div class="row">
+		<div class="col-md-4">			
+			<label>* Last Name</label>
+			@Html.TextBoxFor(model => model.LastName, new { @maxlength = "255", @PlaceHolder = "Enter Last Name", @id = "txtLastName" })			
+		</div>
+		<div class="col-md-4">
+			<label>* First Name</label>
+			@Html.TextBoxFor(model => model.FirstName, new { @maxlength = "255", @PlaceHolder = "Enter First Name", @id = "txtFirstName" })			
+		</div>
+		<div class="col-md-4">
+			<label>* Email </label>
+			@Html.TextBoxFor(model => model.Email, new { @maxlength = "255", @PlaceHolder = "Enter Email Address", @id = "txtEmail" })			
+		</div>
+	</div>
+	<div class="row">
+		<button type="button" id="btnAddContact" class="btn btn-primary">Save</button>
+	</div>
+</form>
+
+
+<div class="row">
+	<div id="divContent"></div>
+</div>
+<script type="text/javascript" language="javascript">
+	var ServiceURL = 'https://localhost:44330/api/Values/';
+
+	$(document).ready(function () {
+
+		$.ajax({
+			type: 'GET',
+			url: ServiceURL + '?orderByDefault=true',
+			success: function (data) {
+				var content = '<table><tr><th>Last Name</th><th>First Name</th><th>Email</th>';
+				Object.keys(data).forEach(function (key) {
+					content = content + '<tr><td>' + data[key].lastName + '</td><td>' + data[key].firstName + "</td><td>" + data[key].email + '</td></tr>';
+				});
+				content = content + '</table>';
+				$('#divContent').html(content);
+			}
+		});					
+
+		//I was trying to use jQuery validation but somehow I couldn't get it working. 
+		$('#btnAddContact').click(function () {			
+			var url = ServiceURL;
+			if($('#txtLastName')!=
+			$('#formContact').submit();
+			$.ajax({
+					type: 'POST',
+					url: url,
+					data: $('#formContact').serialize(),					
+					success: function () {
+						var test = 1;
+					}
+				});			
+		});
+	});
+</script>
