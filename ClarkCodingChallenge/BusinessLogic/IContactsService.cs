@@ -9,8 +9,9 @@ namespace ClarkCodingChallenge.BusinessLogic
 	public interface IContactsService
 	{
 		List<ContactModel> GetContactsByLastName(string lastName, bool orderByDefault = true);
-		void Add(ContactModel model);
-		void Remove(ContactModel model);
+		ContactModel GetContactByEmail(string email);
+		bool Add(ContactModel model);
+		bool Remove(string email);
 		List<ContactModel> GetAll(bool orderByDefault = true);
 	}
 }

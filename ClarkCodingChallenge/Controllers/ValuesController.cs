@@ -27,18 +27,43 @@ namespace ClarkCodingChallenge.Controllers
 				return Json(ex.Message);
 			}
 		}
-			
-		// POST api/<controller>
-		[HttpPost]
-		public void Post(ContactModel model)
+
+		public JsonResult GetContact(string email)
 		{
 			try
 			{
-				_contactsService.Add(model);
+				return Json(_contactsService.GetContactByEmail(email));
 			}
 			catch (Exception ex)
 			{
-				//could be log into log table or log file
+				return Json(ex.Message);
+			}
+		}
+
+		// POST api/<controller>
+		[HttpPost]
+		public JsonResult Post(ContactModel model)
+		{
+			try
+			{
+				return Json(_contactsService.Add(model));
+			}
+			catch (Exception ex)
+			{
+				return Json(ex.Message);
+			}
+		}
+
+		[HttpDelete]
+		public JsonResult Delete(string email)
+		{
+			try
+			{
+				return Json(_contactsService.Remove(email));
+			}
+			catch (Exception ex)
+			{
+				return Json(ex.Message);
 			}
 		}
 	}

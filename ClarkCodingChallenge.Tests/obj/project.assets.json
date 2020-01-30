@@ -8386,11 +8386,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ryan\\Documents\\GitHub\\Coding-Challenge\\ClarkCodingChallenge.Tests\\ClarkCodingChallenge.Tests.csproj",
+      "projectUniqueName": "C:\\Code\\CodeTest-master\\ClarkCodingChallenge.Tests\\ClarkCodingChallenge.Tests.csproj",
       "projectName": "ClarkCodingChallenge.Tests",
-      "projectPath": "C:\\Users\\Ryan\\Documents\\GitHub\\Coding-Challenge\\ClarkCodingChallenge.Tests\\ClarkCodingChallenge.Tests.csproj",
+      "projectPath": "C:\\Code\\CodeTest-master\\ClarkCodingChallenge.Tests\\ClarkCodingChallenge.Tests.csproj",
       "packagesPath": "C:\\Users\\Ryan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ryan\\Documents\\GitHub\\Coding-Challenge\\ClarkCodingChallenge.Tests\\obj\\",
+      "outputPath": "C:\\Code\\CodeTest-master\\ClarkCodingChallenge.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Ryan\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -8406,8 +8406,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\Ryan\\Documents\\GitHub\\Coding-Challenge\\ClarkCodingChallenge\\ClarkCodingChallenge.csproj": {
-              "projectPath": "C:\\Users\\Ryan\\Documents\\GitHub\\Coding-Challenge\\ClarkCodingChallenge\\ClarkCodingChallenge.csproj"
+            "C:\\Code\\CodeTest-master\\ClarkCodingChallenge\\ClarkCodingChallenge.csproj": {
+              "projectPath": "C:\\Code\\CodeTest-master\\ClarkCodingChallenge\\ClarkCodingChallenge.csproj"
             }
           }
         }

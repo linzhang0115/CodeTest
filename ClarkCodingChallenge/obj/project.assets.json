@@ -12626,11 +12626,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ryan\\Documents\\GitHub\\Coding-Challenge\\ClarkCodingChallenge\\ClarkCodingChallenge.csproj",
+      "projectUniqueName": "C:\\Code\\CodeTest-master\\ClarkCodingChallenge\\ClarkCodingChallenge.csproj",
       "projectName": "ClarkCodingChallenge",
-      "projectPath": "C:\\Users\\Ryan\\Documents\\GitHub\\Coding-Challenge\\ClarkCodingChallenge\\ClarkCodingChallenge.csproj",
+      "projectPath": "C:\\Code\\CodeTest-master\\ClarkCodingChallenge\\ClarkCodingChallenge.csproj",
       "packagesPath": "C:\\Users\\Ryan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ryan\\Documents\\GitHub\\Coding-Challenge\\ClarkCodingChallenge\\obj\\",
+      "outputPath": "C:\\Code\\CodeTest-master\\ClarkCodingChallenge\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Ryan\\AppData\\Roaming\\NuGet\\NuGet.Config",

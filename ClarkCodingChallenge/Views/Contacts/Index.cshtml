@@ -10,24 +10,37 @@
 </div>
 <form id="formContact">
 	<div class="row">
-		<div class="col-md-4">			
+		<div class="col-md-4">
 			<label>* Last Name</label>
-			@Html.TextBoxFor(model => model.LastName, new { @maxlength = "255", @PlaceHolder = "Enter Last Name", @id = "txtLastName" })			
+			@Html.TextBoxFor(model => model.LastName, new { @maxlength = "255", @PlaceHolder = "Enter Last Name", @id = "txtLastName" })
 		</div>
 		<div class="col-md-4">
 			<label>* First Name</label>
-			@Html.TextBoxFor(model => model.FirstName, new { @maxlength = "255", @PlaceHolder = "Enter First Name", @id = "txtFirstName" })			
+			@Html.TextBoxFor(model => model.FirstName, new { @maxlength = "255", @PlaceHolder = "Enter First Name", @id = "txtFirstName" })
 		</div>
 		<div class="col-md-4">
 			<label>* Email </label>
-			@Html.TextBoxFor(model => model.Email, new { @maxlength = "255", @PlaceHolder = "Enter Email Address", @id = "txtEmail" })			
+			@Html.TextBoxFor(model => model.Email, new { @maxlength = "255", @PlaceHolder = "Enter Email Address", @id = "txtEmail" })
+		</div>
+		<input type="hidden" id="hdnEmail" value="" />
+	</div>
+	<br />
+	<div class="row">
+		<div id="divMessage">
 		</div>
 	</div>
+	<br />
 	<div class="row">
-		<button type="button" id="btnAddContact" class="btn btn-primary">Save</button>
+		<div class="col-4">
+			<button type="button" id="btnAddContact" class="btn btn-primary">Save</button>
+		</div>
+		<div class="col-4">
+			<button type="button" id="btnCancel" class="btn btn-danger">Cancel</button>
+		</div>
 	</div>
 </form>
-
+<br />
+<br />
 
 <div class="row">
 	<div id="divContent"></div>
@@ -36,33 +49,117 @@
 	var ServiceURL = 'https://localhost:44330/api/Values/';
 
 	$(document).ready(function () {
+		$("#txtEmail").removeAttr("disabled");
 
-		$.ajax({
-			type: 'GET',
-			url: ServiceURL + '?orderByDefault=true',
-			success: function (data) {
-				var content = '<table><tr><th>Last Name</th><th>First Name</th><th>Email</th>';
-				Object.keys(data).forEach(function (key) {
-					content = content + '<tr><td>' + data[key].lastName + '</td><td>' + data[key].firstName + "</td><td>" + data[key].email + '</td></tr>';
-				});
-				content = content + '</table>';
-				$('#divContent').html(content);
-			}
-		});					
-
-		//I was trying to use jQuery validation but somehow I couldn't get it working. 
-		$('#btnAddContact').click(function () {			
-			var url = ServiceURL;
-			if($('#txtLastName')!=
-			$('#formContact').submit();
+		function editcontact(email) {
 			$.ajax({
+				type: 'GET',
+				url: ServiceURL + 'GetContact/?email=' + email,
+				success: function (data) {
+					if (data != null) {
+						$('#hdnEmail').val(email);
+						$('#txtLastName').val(data.LastName);
+						$('#txtFirstName').val(data.FirstName);
+						$('#txtEmail').val(data.Email);
+						$("#txtEmail").attr("disabled", "disabled");
+					}
+					else {
+						$('#divContent').html('No matched record found.');
+					}
+				}
+			});
+		}
+
+		function deletecontact(email) {
+			$.ajax({
+				type: 'DELETE',
+				url: ServiceURL + '?email=' + email,
+				success: function (data) {
+					if (data = true) {
+						displayContacts();
+					}
+					else {
+						$('#divContent').html('No matched record found.');
+					}
+				}
+			});
+		}
+
+		function displayContacts() {
+			$.ajax({
+				type: 'GET',
+				url: ServiceURL + '?orderByDefault=true',
+				success: function (data) {
+					var content = '<table><tr><th>Last Name</th><th>First Name</th><th>Email</th>';
+					Object.keys(data).forEach(function (key) {
+						content = content + '<tr><td>' + data[key].lastName + '</td><td>' + data[key].firstName + "</td><td>" + data[key].email + '</td><td><a href=javascript:editcontact("' + data[key].email + '")>Edit</a>' + '</td><td><a href=javascript:deletecontact("' + data[key].email + '")>Delete</a></td></tr>';
+					});
+					content = content + '</table>';
+					$('#divContent').html(content);
+				}
+			});
+		}
+
+		displayContacts();
+
+
+		$('#btnAddContact').click(function () {
+			var url = ServiceURL;
+			var message = '';
+			$('#divMessage').html(message);
+			var isValid = true;
+
+			if ($('#txtLastName').val() == undefined || $('#txtLastName').val() == '') {
+				message = 'Last Name is required. ';
+				isValid = false;
+			}
+
+			if ($('#txtFirstName').val() == undefined || $('#txtFirstName').val() == '') {
+
+				message = message + 'First Name is required. ';
+				isValid = false;
+			}
+
+			if ($('#txtEmail').val() == undefined || $('#txtEmail').val() == '') {
+				message = message + 'Email is required. ';
+				isValid = false;
+			}
+
+			$('#divMessage').html(message);
+
+			if (isValid) {
+				$('#divMessage').html('');
+				$.ajax({
 					type: 'POST',
 					url: url,
-					data: $('#formContact').serialize(),					
-					success: function () {
-						var test = 1;
+					data: $('#formContact').serialize(),
+					success: function (data) {
+						debugger;
+						if (data == false) {
+							$('#divMessage').html('Last Name is required. First Name is required. Email is required. Email needs to be in valid format. Last Name cannot be duplicated.');
+						}
+						else {
+							displayContacts();
+							$('#txtLastName').val('');
+							$('#txtFirstName').val('');
+							$('#txtEmail').val('');
+						}
 					}
-				});			
+				});
+			}
+		});		
+
+		$('#btnCancel').click(function () {
+			var email = $('#hdnEmail').val();
+			if ($('#hdnEmail').val() != '') {
+				Edit(email);
+			}
+			else {
+				$('#txtLastName').val('');
+				$('#txtFirstName').val('');
+				$('#txtEmail').val('');
+				$("#txtEmail").removeAttr("disabled");
+			}
 		});
 	});
 </script>

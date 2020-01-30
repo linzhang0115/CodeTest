@@ -21,6 +21,12 @@ namespace ClarkCodingChallenge.DataAccess
             }
         }
 
+        public Contact GetContactByEmail(string email)
+        {
+            this.initilizeData();
+            return Contacts.FirstOrDefault(c => c.Email == email);
+        }
+
         public void Add(Contact contact)
         {            
             Contacts.Add(contact);
@@ -44,7 +50,7 @@ namespace ClarkCodingChallenge.DataAccess
             {
                 return Contacts.OrderByDescending(c => c.LastName).ThenByDescending(c => c.FirstName).ToList();
             }
-        }
+        }  
 
         private void initilizeData()
         {
